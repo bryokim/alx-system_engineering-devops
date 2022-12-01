@@ -19,6 +19,7 @@
 	Other users: all the permissions
 
 9-John_Doe - sets the mode of the file hello to this:
+
 	```-rwxr-x-wx 1 julien julien 23 Sep 20 14:25 hello```
 
 10-mirror_permissions -  sets the mode of the file hello the same as olleh’s mode.
@@ -28,3 +29,9 @@
 12-directory_permissions -  creates a directory called my_dir with permissions 751 in the working directory.
 
 13-change_group - changes the group owner to school for the file hello.
+
+100-change_owner_and_group - changes the owner to vincent and the group owner to staff for all the files and directories in the working directory.
+
+101-symbolic_link_permissions - changes the owner and the group owner of _hello to vincent and staff respectively. _hello is a symbolic link in the current working directory.
+
+102-if_only - changes the owner of the file hello to betty only if it is owned by the user guillaume.
