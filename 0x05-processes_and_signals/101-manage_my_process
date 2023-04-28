@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Manages manage_my_process.
+
+usage="Usage: manage_my_process {start|stop|restart}"
+
+if [ "$#" -eq 0 ] || { [ "$1" != "start" ] && [ "$1" != "stop" ] && [ "$1" != "restart" ]; }
+then
+	echo "$usage"
+	exit
+fi
+
+case $1 in
+	"start")
+		./manage_my_process &
+		install -m 756 /dev/null /var/run/my_process.pid
+		echo "$!" > /var/run/my_process.pid
+		echo "manage_my_process started"
+		;;
+	"stop")
+		if [ -f /var/run/my_process.pid ]
+		then
+			kill "$(cat /var/run/my_process.pid)"
+			rm /var/run/my_process.pid
+		fi
+		echo "manage_my_process stopped"
+		;;
+	"restart")
+		./101-manage_my_process stop > /dev/null
+		./101-manage_my_process start > /dev/null
+		echo "manage_my_process restarted"
+		;;
+esac
