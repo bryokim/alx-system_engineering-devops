@@ -1,7 +1,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
-
+#include <stdio.h>
 
 /**
  * infinite_while - Infinite while loop.
@@ -31,10 +31,19 @@ int main(void)
 	for (i = 0; i < 5; i++)
 	{
 		child_pid = fork();
-		if (child_pid == -1)
-			return (1);
+		if (child_pid > 0)
+		{
+			printf("Zombie process created, PID: %d\n", child_pid);
+			sleep(2);
+		}
 		else if (child_pid == 0)
+		{
 			exit(0);
+		}
+		else
+		{
+			return (1);
+		}
 	}
 
 	i = infinite_while();
