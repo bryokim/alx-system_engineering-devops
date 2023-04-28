@@ -1,31 +1,4 @@
 #!/usr/bin/env bash
 # Groups visitors by IP and HTTP status code and displays the data.
 
-awk '{ip_count[$1," ", $9]++};
-function sort(arr, idxs, args,      i, str, cmd) {
-    for (i in arr) {
-        gsub(/\047/, "\047\\\047\047", i)
-        str = str i ORS
-    }
-
-    cmd = "printf \047%s\047 \047" str "\047 |sort -n -r" args
-
-    i = 0
-    while ( (cmd | getline idx) > 0 ) {
-        idxs[++i] = idx
-    }
-
-    close(cmd)
-
-    return i
-}
-END {
-	for (i in ip_count) new[ip_count[i]]=ip_count[i]
-	n = sort(new, keys)
-	for (i=1; i<=n; i++){
-		for (ip in ip_count){
-			if (ip_count[ip] == keys[i])
-				print ip_count[ip],ip
-		}
-	}
-}' apache-access.log
+awk '{print $1,$9}' < apache-access.log | sort | uniq -c | sort -gr
