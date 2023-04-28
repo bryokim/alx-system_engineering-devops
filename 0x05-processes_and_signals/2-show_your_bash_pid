@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Display PID of the Bash process.
+# shellcheck disable=SC2009
+
+ps -C bash -o user,pid,%cpu,%mem,vsz,rss,tty,stat,start,time,cmd --no-headers
