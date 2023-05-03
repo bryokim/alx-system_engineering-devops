@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+count=1
+
+while read -r line
+do
+	echo -n "$count "
+	./100-textme.rb "$line"
+	((count++))
+done < text_messages.log
