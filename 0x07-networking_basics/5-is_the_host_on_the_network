@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Pings an IP assress passed as argument.
+
+case "$#" in
+	0)
+		echo "Usage: 5-is_the_host_on_the_network {IP_ADDRESS}"
+		;;
+	*)
+		ping -c 5 "$1"
+		;;
+esac
