@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Configures an Ubuntu server with:
+# 	localhost -> 127.0.0.2
+# 	facebok.com -> 8.8.8.8
+
+cp /etc/hosts ~/hosts.new
+
+if grep -q localhost ~/hosts.new
+then
+	sed -i s/^.*localhost$/"127.0.0.2\tlocalhost"/ ~/hosts.new
+else
+	printf "127.0.0.2\tlocalhost\n" >> ~/hosts.new
+fi
+
+if grep -q facebook.com ~/hosts.new
+then
+	sed -i s/^.*facebook.com$/"8.8.8.8\tfacebook.com"/ ~/hosts.new
+else
+	printf "8.8.8.8\tfacebook.com\n" >> ~/hosts.new
+fi
+
+cat ~/hosts.new > /etc/hosts
