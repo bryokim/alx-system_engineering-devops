@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Connects to my server using the privete key ~/.ssh/school
+# with user ubuntu
+
+eval "$(ssh-agent -s)" > /dev/null
+ssh-add ~/.ssh/school > /dev/null 2>&1
+ssh ubuntu@34.204.60.232
