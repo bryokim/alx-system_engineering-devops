@@ -14,7 +14,9 @@ package { 'nginx':
 
 $string = '
         # 301 redirect for /redirect_me
-        rewrite ^/redirect_me/?$ https://youtube.com/v=QH2-TGUlwu4 permanent;
+        location /redirect_me {
+                return 301 https://www.youtube.com/v=QH2-TGUlwu4;
+        }
 }'
 
 file { '/var/www/html/index.html':

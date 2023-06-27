@@ -15,7 +15,7 @@ sudo chmod -R "0755" /var/www/html
 echo "Hello World!" > /var/www/html/index.html
 
 # String to add to the config file.
-string='\n\t# Redirect /redirect_me path to youtube.\n\trewrite ^/redirect_me/?$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n}'
+string='\n\t# 301 redirect for /redirect_me.\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4 ;\n\t}\n}'
 
 # Add string at the end of the server config.
 sudo sed -i s~'^}$'~"${string}"~ /etc/nginx/sites-available/default
@@ -23,4 +23,4 @@ sudo sed -i s~'^}$'~"${string}"~ /etc/nginx/sites-available/default
 # Restart the nginx service
 sudo service nginx restart
 
-echo "Successfully started nginx"
+echo -e "\nSuccessfully started nginx"
