@@ -16,7 +16,7 @@ sudo chmod -R "0755" /var/www/html
 echo "Hello World!" > /var/www/html/index.html
 
 # 301 redirect for /redirect_me config.
-redirect='\n\t# Redirect /redirect_me path to youtube.\n\trewrite ^/redirect_me$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n}'
+redirect='\n\t# Redirect /redirect_me path to youtube.\n\trewrite ^/redirect_me/?$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n}'
 sudo sed -i s~'^}$'~"${redirect}"~ /etc/nginx/sites-available/default
 
 # Write new error 404 page.
