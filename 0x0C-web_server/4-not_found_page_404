@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Installs Nginx and configures 301 redirection for /redirect_me
+# and sets a custom 404 page.
+
+# Update system.
+sudo apt-get -yqq update
+
+# Install nginx
+sudo apt-get -y install nginx
+
+# Change owner and permissions.
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R "0755" /var/www/html
+
+# Write to index file.
+echo "Hello World!" > /var/www/html/index.html
+
+# 301 redirect for /redirect_me config.
+redirect='\n\t# Redirect /redirect_me path to youtube.\n\trewrite ^/redirect_me$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n}'
+sudo sed -i s~'^}$'~"${redirect}"~ /etc/nginx/sites-available/default
+
+# Write new error 404 page.
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+
+# Custom 404 error page config.
+error_404='\n\t# Custom 404 page\n\terror_page 404 /404.html;\n}'
+sudo sed -i s~'^}$'~"${error_404}"~ /etc/nginx/sites-available/default
+
+# Restart the nginx service
+sudo service nginx restart
+
+echo -e "\nSuccessfully started nginx"

@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Configure Nginx server so that /redirect_me is redirecting to another page.
+
+# Update system
+sudo apt-get -yqq update
+
+# Install nginx
+sudo apt-get -y install nginx
+
+# Change owner and permissions.
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R "0755" /var/www/html
+
+# Write new index file
+echo "Hello World!" > /var/www/html/index.html
+
+# String to add to the config file.
+string='\n\t# Redirect /redirect_me path to youtube.\n\trewrite ^/redirect_me$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;\n}'
+
+# Add string at the end of the server config.
+sudo sed -i s~'^}$'~"${string}"~ /etc/nginx/sites-available/default
+
+# Restart the nginx service
+sudo service nginx restart
+
+echo "Successfully started nginx"

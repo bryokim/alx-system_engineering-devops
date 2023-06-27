@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Configures a new Ubuntu machine to install nginx web server
+# and configure the root page to contain string Hello World!
+
+# Update system
+sudo apt-get -yqq update
+
+# Install nginx
+sudo apt-get -y install nginx
+
+# Change owner and permissions.
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R "0755" /var/www/html
+
+# Write new index file
+echo "Hello World!" > /var/www/html/index.html
+
+# Start the nginx service
+sudo service nginx restart
+
+echo "Successfully started nginx"
