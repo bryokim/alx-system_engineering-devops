@@ -1,1 +1,4 @@
+#!/usr/bin/env bash
+# Fixes the apache server on container holbertonschool/265-0.
+
 service apache2 start
