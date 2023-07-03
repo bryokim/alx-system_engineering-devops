@@ -5,9 +5,9 @@ include stdlib
 $line = '        add_header X-Served-By $hostname always;'
 
 exec { 'update system':
-  path    => '/usr/bin:/usr/sbin:/bin',
-  command => 'apt-get update -y',
-  before  => Package['nginx'],
+  provider => shell,
+  command  => 'apt-get update -y',
+  before   => Package['nginx'],
 }
 
 Package { 'nginx':
