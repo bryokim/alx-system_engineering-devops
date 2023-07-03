@@ -5,13 +5,15 @@ include stdlib
 $line = '        add_header X-Served-By $hostname always;'
 
 exec { 'update system':
-  command => 'sudo apt-get update -y',
+  path    => '/usr/bin:/usr/sbin:/bin',
+  command => 'apt-get update -y',
   before  => Package['nginx'],
 }
 
 Package { 'nginx':
   ensure => installed,
-  before => File_line['add_header']
+  before => File_line['add_header'],
+  notify => Service['nginx']
 }
 
 file_line { 'add_header':
