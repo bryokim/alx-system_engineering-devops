@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Configures a new ubuntu machine with the following requirements:
+# 	Nginx installed
+# 	Nginx response containing custom header "X-Served-By" whose value
+# is the hostname of the server Nginx is ruuning on.
+
+# Add X-Served-By header
+sudo sed -i '62a\\n        add_header X-Served-By $hostname always;' /etc/nginx/nginx.conf
+
+# Start nginx
+sudo service nginx restart
