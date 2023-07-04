@@ -4,8 +4,21 @@
 # 	Nginx response containing custom header "X-Served-By" whose value
 # is the hostname of the server Nginx is ruuning on.
 
+# Update system and install nginx
+sudo apt-get -y update
+sudo apt-get install -y nginx
+
+# Change owner and permissions.
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R "0755" /var/www/html
+
+# Write new index file
+echo "Hello World!" > /var/www/html/index.html
+
+sudo sed -i "24i\ \n\trewrite ^/redirect_me https://www.youtube.com/v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default
+
 # Add X-Served-By header
-sudo sed -i '62a\\n        add_header X-Served-By $hostname always;' /etc/nginx/nginx.conf
+sudo sed -i "25i\ \tadd_header X-Served-By \$hostname always;" /etc/nginx/sites-available/default
 
 # Start nginx
 sudo service nginx restart
