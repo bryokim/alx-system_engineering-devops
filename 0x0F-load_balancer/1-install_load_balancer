@@ -5,9 +5,7 @@
 sudo apt-get update -y
 
 # Install HAproxy
-sudo apt-get install --no-install-recommends -y software-properties-common
-sudo add-apt-repository ppa:vbernat/haproxy-2.8 -y
-sudo apt-get install -y haproxy=2.8.\*
+sudo apt-get install -y haproxy
 
 # Configure HAproxy
 backend="backend web_backend\n\
