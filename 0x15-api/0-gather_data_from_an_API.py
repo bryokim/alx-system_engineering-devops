@@ -4,18 +4,18 @@ TODO list progess for a given employee ID.
 """
 
 import requests
-from sys import argv
+import sys
 
 base_url = "https://jsonplaceholder.typicode.com"
 
-employee_name = requests.get(f"{base_url}/users/{argv[1]}").json().get("name")
-tasks = requests.get(f"{base_url}/users/{argv[1]}/todos").json()
+employee = requests.get(f"{base_url}/users/{sys.argv[1]}").json()
+tasks = requests.get(f"{base_url}/users/{sys.argv[1]}/todos").json()
 
 done_tasks = [task.get("title") for task in tasks if task.get("completed")]
 
 print(
     "Employee {} is done with tasks({}/{})".format(
-        employee_name, len(done_tasks), len(tasks)
+        employee.get("name"), len(done_tasks), len(tasks)
     )
 )
 

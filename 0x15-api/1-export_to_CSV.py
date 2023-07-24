@@ -10,20 +10,25 @@ Format of the csv file:
 
 import csv
 import requests
-from sys import argv
+import sys
 
-filename = f"{argv[1]}.csv"
+filename = f"{sys.argv[1]}.csv"
 base_url = "https://jsonplaceholder.typicode.com"
 
-username = requests.get(f"{base_url}/users/{argv[1]}").json().get("username")
-tasks = requests.get(f"{base_url}/users/{argv[1]}/todos").json()
+employee = requests.get(f"{base_url}/users/{sys.argv[1]}").json()
+tasks = requests.get(f"{base_url}/users/{sys.argv[1]}/todos").json()
 
 with open(filename, "w") as csvfile:
     csvwriter = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
 
     csvwriter.writerows(
         [
-            [argv[1], username, task.get("completed"), task.get("title")]
+            [
+                sys.argv[1],
+                employee.get("username"),
+                task.get("completed"),
+                task.get("title"),
+            ]
             for task in tasks
         ]
     )

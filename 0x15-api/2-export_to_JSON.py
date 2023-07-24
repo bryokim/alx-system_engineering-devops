@@ -23,21 +23,21 @@ Format of the json:
 
 import json
 import requests
-from sys import argv
+import sys
 
-filename = f"{argv[1]}.json"
+filename = f"{sys.argv[1]}.json"
 base_url = "https://jsonplaceholder.typicode.com"
 
-username = requests.get(f"{base_url}/users/{argv[1]}").json().get("username")
-tasks = requests.get(f"{base_url}/users/{argv[1]}/todos").json()
+employee = requests.get(f"{base_url}/users/{sys.argv[1]}").json()
+tasks = requests.get(f"{base_url}/users/{sys.argv[1]}/todos").json()
 
 with open(filename, "w") as f:
     data = {
-        f"{argv[1]}": [
+        f"{sys.argv[1]}": [
             {
                 "task": task.get("title"),
                 "completed": task.get("completed"),
-                "username": username,
+                "username": employee.get("username"),
             }
             for task in tasks
         ]
