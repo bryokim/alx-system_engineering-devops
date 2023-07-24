@@ -25,22 +25,24 @@ import json
 import requests
 import sys
 
-filename = f"{sys.argv[1]}.json"
-base_url = "https://jsonplaceholder.typicode.com"
 
-employee = requests.get(f"{base_url}/users/{sys.argv[1]}").json()
-tasks = requests.get(f"{base_url}/users/{sys.argv[1]}/todos").json()
+if len(sys.argv) > 1:
+    filename = f"{sys.argv[1]}.json"
+    base_url = "https://jsonplaceholder.typicode.com"
 
-with open(filename, "w") as f:
-    data = {
-        f"{sys.argv[1]}": [
-            {
-                "task": task.get("title"),
-                "completed": task.get("completed"),
-                "username": employee.get("username"),
-            }
-            for task in tasks
-        ]
-    }
+    employee = requests.get(f"{base_url}/users/{sys.argv[1]}").json()
+    tasks = requests.get(f"{base_url}/users/{sys.argv[1]}/todos").json()
 
-    json.dump(data, f)
+    with open(filename, "w") as f:
+        data = {
+            f"{sys.argv[1]}": [
+                {
+                    "task": task.get("title"),
+                    "completed": task.get("completed"),
+                    "username": employee.get("username"),
+                }
+                for task in tasks
+            ]
+        }
+
+        json.dump(data, f)

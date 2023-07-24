@@ -12,23 +12,24 @@ import csv
 import requests
 import sys
 
-filename = f"{sys.argv[1]}.csv"
-base_url = "https://jsonplaceholder.typicode.com"
+if len(sys.argv) > 1:
+    filename = f"{sys.argv[1]}.csv"
+    base_url = "https://jsonplaceholder.typicode.com"
 
-employee = requests.get(f"{base_url}/users/{sys.argv[1]}").json()
-tasks = requests.get(f"{base_url}/users/{sys.argv[1]}/todos").json()
+    employee = requests.get(f"{base_url}/users/{sys.argv[1]}").json()
+    tasks = requests.get(f"{base_url}/users/{sys.argv[1]}/todos").json()
 
-with open(filename, "w") as csvfile:
-    csvwriter = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
+    with open(filename, "w") as csvfile:
+        csvwriter = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
 
-    csvwriter.writerows(
-        [
+        csvwriter.writerows(
             [
-                sys.argv[1],
-                employee.get("username"),
-                task.get("completed"),
-                task.get("title"),
+                [
+                    sys.argv[1],
+                    employee.get("username"),
+                    task.get("completed"),
+                    task.get("title"),
+                ]
+                for task in tasks
             ]
-            for task in tasks
-        ]
-    )
+        )
