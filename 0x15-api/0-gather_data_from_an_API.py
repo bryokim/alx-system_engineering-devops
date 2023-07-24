@@ -18,7 +18,7 @@ def gather_data():
     done_tasks = [task.get("title") for task in tasks if task.get("completed")]
 
     print(
-        "Employee {} is done with tasks({}/{})".format(
+        "Employee {} is done with tasks({}/{}):".format(
             employee.get("name"), len(done_tasks), len(tasks)
         )
     )
