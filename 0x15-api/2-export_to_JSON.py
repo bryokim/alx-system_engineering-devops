@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""
-Uses the jsonplaceholder.typicode.com API to return information about
+"""Uses the jsonplaceholder.typicode.com API to return information about
 TODO list progress for a given employee ID. The output is written into
 a json file. Name of the file is <user_id>.json where user_id is the
 employee id.
@@ -26,26 +25,11 @@ import json
 import requests
 from sys import argv
 
-filename = "{}.json".format(argv[1])
+filename = f"{argv[1]}.json"
+base_url = "https://jsonplaceholder.typicode.com"
 
-
-def fetch_resource(path):
-    """Fetch data from the given path.
-
-    Args:
-        path (str): Location of the resource.
-
-    Returns:
-        Any: Deserializes the data in the response to a suitable
-            Python type.
-    """
-    res = requests.get("https://jsonplaceholder.typicode.com{}".format(path))
-
-    return json.loads(res.text)
-
-
-employee_name = fetch_resource(f"/users/{argv[1]}").get("name")
-tasks = fetch_resource(f"/users/{argv[1]}/todos")
+username = requests.get(f"{base_url}/users/{argv[1]}").json().get("username")
+tasks = requests.get(f"{base_url}/users/{argv[1]}/todos").json()
 
 with open(filename, "w") as f:
     data = {
@@ -53,7 +37,7 @@ with open(filename, "w") as f:
             {
                 "task": task.get("title"),
                 "completed": task.get("completed"),
-                "username": employee_name,
+                "username": username,
             }
             for task in tasks
         ]
