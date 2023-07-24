@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Uses the jsonplaceholder.typicode.com API to return information about
-TODO list progress for all employees. The output is exported to
+todo list progress for all employees. The output is exported to
 todo_all_employees.json.
 
 Format of the output:
@@ -31,21 +31,8 @@ base_url = "https://jsonplaceholder.typicode.com"
 
 
 def get_all_employee_data():
-    """Fetch needed data for all employees.
-
-    Returns:
-        dict: Dictionary of employee data.
-            Format:
-            {
-                <user_id>: [
-                    {
-                        "username": "USERNAME",
-                        "task": "TASK_TITLE",
-                        "completed": TASK_COMPLETED_STATUS
-                    }, ...
-                ], ...
-            }
-    """
+    """Fetch needed data for all employees and write to
+    todo_all_employees.json."""
 
     data = {}
     i = 1
@@ -59,7 +46,7 @@ def get_all_employee_data():
         tasks = requests.get(f"{base_url}/users/{i}/todos").json()
         data.update(
             {
-                f'{i}': [
+                f"{i}": [
                     {
                         "username": f'{employee.get("username")}',
                         "task": task.get("title"),
@@ -71,9 +58,9 @@ def get_all_employee_data():
         )
         i += 1
 
-    return data
+    with open(filename, "w") as f:
+        json.dump(data, f)
 
 
-with open(filename, "w") as f:
-    data = get_all_employee_data()
-    json.dump(data, f)
+if __name__ == "__main__":
+    get_all_employee_data()

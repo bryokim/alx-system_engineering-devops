@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Uses the jsonplaceholder.typicode.com API to return information about
-TODO list progess for a given employee ID. The output is written to a
+todo list progress for a given employee ID. The output is written to a
 csv file. Name of the file is <user_id>.csv where user_id is the id of
 the employee.
 
@@ -12,7 +12,10 @@ import csv
 import requests
 import sys
 
-if len(sys.argv) > 1:
+
+def get_csv_file():
+    """Generate a csv file from the employee data."""
+
     filename = f"{sys.argv[1]}.csv"
     base_url = "https://jsonplaceholder.typicode.com"
 
@@ -33,3 +36,8 @@ if len(sys.argv) > 1:
                 for task in tasks
             ]
         )
+
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        get_csv_file()

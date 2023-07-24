@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Uses the jsonplaceholder.typicode.com API to return information about
-TODO list progress for a given employee ID. The output is written into
+todo list progress for a given employee ID. The output is written into
 a json file. Name of the file is <user_id>.json where user_id is the
 employee id.
 
@@ -26,7 +26,9 @@ import requests
 import sys
 
 
-if len(sys.argv) > 1:
+def get_json_file():
+    """Get employee data as a json file"""
+
     filename = f"{sys.argv[1]}.json"
     base_url = "https://jsonplaceholder.typicode.com"
 
@@ -46,3 +48,8 @@ if len(sys.argv) > 1:
         }
 
         json.dump(data, f)
+
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        get_json_file()
