@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""
-Uses the jsonplaceholder.typicode.com API to return information about
+"""Uses the jsonplaceholder.typicode.com API to return information about
 TODO list progress for all employees. The output is exported to
 todo_all_employees.json.
 
@@ -11,20 +10,10 @@ Format of the output:
                 "username": "USERNAME",
                 "task": "TASK_TITLE",
                 "completed": TASK_COMPLETED_STATUS
-            },
-            {
-                "username": "USERNAME",
-                "task": "TASK_TITLE",
-                "completed": TASK_COMPLETED_STATUS
             }, ...
         ],
         "USER_ID":
         [
-            {
-                "username": "USERNAME",
-                "task": "TASK_TITLE",
-                "completed": TASK_COMPLETED_STATUS
-            },
             {
                 "username": "USERNAME",
                 "task": "TASK_TITLE",
@@ -38,21 +27,7 @@ import json
 import requests
 
 filename = "todo_all_employees.json"
-
-
-def fetch_resource(path):
-    """Fetch data from the given path.
-
-    Args:
-        path (str): Location of the resource.
-
-    Returns:
-        Any: Deserializes the data in the response to a suitable
-            Python type.
-    """
-    res = requests.get(f"https://jsonplaceholder.typicode.com{path}")
-
-    return json.loads(res.text)
+base_url = "https://jsonplaceholder.typicode.com"
 
 
 def get_all_employee_data():
@@ -75,18 +50,18 @@ def get_all_employee_data():
     data = {}
     i = 1
     while True:
-        employee = fetch_resource(f"/users/{i}")
+        employee = requests.get(f"{base_url}/users/{i}").json()
 
         # Exit loop if the employee is not found.
         if not employee:
             break
 
-        tasks = fetch_resource(f"/users/{i}/todos")
+        tasks = requests.get(f"{base_url}/users/{i}/todos").json()
         data.update(
             {
                 f'{i}': [
                     {
-                        "username": f'{employee.get("name")}',
+                        "username": f'{employee.get("username")}',
                         "task": task.get("title"),
                         "completed": task.get("completed"),
                     }
